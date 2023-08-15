@@ -38,7 +38,7 @@ The application aims to provide the following functionalities:
     - Register small and large producers.
     - Manage producer federations.
 
-2. **Product Management**:
+2. **Production Management**:
     - Register products with associated yield per hectare and reference price.
 
 3. **Logistics Management**:
