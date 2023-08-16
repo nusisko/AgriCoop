@@ -1,4 +1,6 @@
-package Production;
+package Production.Validations;
+
+import Production.Models.Product;
 
 import java.util.ArrayList;
 
@@ -11,13 +13,13 @@ import java.util.ArrayList;
 /* Declared as package-private to prevent access from outside the package */
 /* Declared as final to prevent inheritance */
 
-final class ProductValidator {
+public final class ProductValidator {
 
     /**
      * Collection of the products created
      */
     /* Declared as final to prevent reassignment of the object reference; still mutable */
-    private static final ArrayList<Product> productCollection = new ArrayList<>();
+    private static final ArrayList<Product> productDirectory = new ArrayList<>();
 
     /**
      * Private constructor to prevent instantiation
@@ -49,7 +51,7 @@ final class ProductValidator {
         if (productName == null) {
             throw new NullPointerException("Product name cannot be null.");
         }
-        for (Product product : productCollection) {
+        for (Product product : productDirectory) {
             if (product.getName().equals(productName)) {
                 throw new IllegalArgumentException("Product already exists in the product collection.");
             }
@@ -62,6 +64,6 @@ final class ProductValidator {
      * @param product the product to register
      */
     public static void registerProduct(Product product) {
-        productCollection.add(product);
+        productDirectory.add(product);
     }
 }

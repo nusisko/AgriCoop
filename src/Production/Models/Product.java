@@ -1,16 +1,19 @@
-package Production;
+package Production.Models;
+
+import Production.Validations.ProductValidator;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Class that represents a product
  *
  * @version 1.0.0
  */
-public class Product {
+public class Product{
 
     /**
      * Product name
      */
-    private String name;
+    private final String name;
 
     /**
      * Product price in euros per kilogram without taxes
@@ -20,7 +23,7 @@ public class Product {
     /**
      * Product performance in tonnes per hectare
      */
-    private double performance;
+    private float performance;
 
     /**
      * Defines the perishable property of a product
@@ -50,27 +53,48 @@ public class Product {
         ProductValidator.registerProduct(this);
     }
 
-    public String getName() {
-        return name;
+    /**
+     * Creates a deep copy of the product passed as parameter
+     *
+     * @param productToCopy the product to copy
+     * @throws NullPointerException if the product is null
+     */
+    public Product(@NotNull Product productToCopy) {
+        this.name = productToCopy.getName();
+        this.price = productToCopy.getPrice();
+        this.performance = productToCopy.getPerformance();
+        this.isPerishable = productToCopy.isPerishable();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
     public float getPrice() {
         return price;
     }
 
+    /**
+     * Sets the price of the product
+     * @param price the price of the product
+     * @throws IllegalArgumentException if the price is negative
+     */
     public void setPrice(float price) {
+        ProductValidator.validatePositiveValue(price);
         this.price = price;
     }
 
-    public double getPerformance() {
+    public float getPerformance() {
         return performance;
     }
 
-    public void setPerformance(double performance) {
+    /**
+     * Sets the performance of the product
+     * @param performance the performance of the product
+     * @throws IllegalArgumentException if the performance is negative
+     */
+    public void setPerformance(float performance) {
+        ProductValidator.validatePositiveValue(performance);
         this.performance = performance;
     }
 

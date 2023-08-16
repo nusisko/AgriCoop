@@ -1,4 +1,7 @@
-package Production;
+package Production.Models;
+
+import Production.Validations.ProductValidator;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Class that represents a crop
@@ -34,12 +37,23 @@ public class Crop {
 
     }
 
+    /**
+     * Creates a deep copy of the crop passed as parameter
+     * @param cropToCopy the crop to copy
+     * @throws NullPointerException if the crop is null
+     */
+
+    public Crop(@NotNull Crop cropToCopy){
+        this.product = cropToCopy.getProduct();
+        this.extension = cropToCopy.getExtension();
+    }
+
     public Product getProduct() {
-        return product;
+        return new Product(product);
     }
 
     public void setProduct(Product product) {
-        this.product = product;
+        this.product = new Product(product);
     }
 
     public float getExtension() {
