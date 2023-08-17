@@ -1,4 +1,4 @@
-import Regulation.CooperativeStatics;
+import regulation.CooperativeStatics;
 
 public class Cooperative {
     public static void main(String[] args) {

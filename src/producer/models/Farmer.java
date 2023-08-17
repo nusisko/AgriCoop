@@ -1,6 +1,8 @@
-package Producers.Models;
+package producer.models;
 
-import Production.Models.Crop;
+import logistics.QuantityOwnerPair;
+import logistics.Stock;
+import production.models.Crop;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
  * @version 1.0.0
  * @see Crop
  */
-public abstract class Farmer {
+public abstract class Farmer implements IHarvester {
 
     /**
      * Farmer name
@@ -98,5 +100,11 @@ public abstract class Farmer {
     }
 
     public abstract void addCrop(Crop crop);
+
+    public void harvestToStock(Crop crop){
+        QuantityOwnerPair quantityOwnerPair = new QuantityOwnerPair(this, crop.getExtension());
+        Stock.addQuantity(crop.getProduct(), quantityOwnerPair);
+        removeCrop(crop);
+    }
 
 }

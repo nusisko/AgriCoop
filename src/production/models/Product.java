@@ -1,6 +1,6 @@
-package Production.Models;
+package production.models;
 
-import Production.Validations.ProductValidator;
+import production.validations.ProductValidator;
 import org.jetbrains.annotations.NotNull;
 
 /**

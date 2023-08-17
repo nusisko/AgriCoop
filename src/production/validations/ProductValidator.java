@@ -1,6 +1,7 @@
-package Production.Validations;
+package production.validations;
 
-import Production.Models.Product;
+import logistics.Stock;
+import production.models.Product;
 
 import java.util.ArrayList;
 
@@ -65,5 +66,6 @@ public final class ProductValidator {
      */
     public static void registerProduct(Product product) {
         productDirectory.add(product);
+        Stock.registerProduct(product);
     }
 }

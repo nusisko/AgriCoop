@@ -1,9 +1,9 @@
-package Producers.Validations;
+package producer.validations;
 
-import Producers.Models.FederatedFarmer;
-import Producers.Models.SmallFarmer;
-import Production.Models.Crop;
-import Production.Models.Product;
+import producer.models.FederatedFarmer;
+import producer.models.SmallFarmer;
+import production.models.Crop;
+import production.models.Product;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -35,14 +35,6 @@ public final class FederatedFarmerValidation {
      */
     public static void registerFederatedFarmer(FederatedFarmer federatedFarmer) {
         federatedFarmersDirectory.add(federatedFarmer);
-    }
-
-    public static @NotNull HashMap<SmallFarmer, Float> initializeFederationCropMap(@NotNull HashSet<SmallFarmer> associates) {
-        HashMap<SmallFarmer, Float> map = new HashMap<>();
-        for (SmallFarmer associate : associates) {
-            map.put(associate, 0.0f);
-        }
-        return map;
     }
 
     public static void validateAsociate(SmallFarmer smallFarmer, HashSet<SmallFarmer> associates) {

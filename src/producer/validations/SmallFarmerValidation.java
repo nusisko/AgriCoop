@@ -1,7 +1,7 @@
-package Producers.Validations;
+package producer.validations;
 
-import Production.Models.Crop;
-import Regulation.CooperativeStatics;
+import production.models.Crop;
+import regulation.CooperativeStatics;
 
 import java.util.ArrayList;
 

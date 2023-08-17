@@ -1,7 +1,7 @@
-package Producers.Models;
+package producer.models;
 
-import Producers.Validations.SmallFarmerValidation;
-import Production.Models.Crop;
+import producer.validations.SmallFarmerValidation;
+import production.models.Crop;
 
 import java.util.ArrayList;
 

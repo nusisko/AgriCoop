@@ -1,4 +1,4 @@
-package Regulation;
+package regulation;
 
 public enum TaxesConstants {
     IVA(.21f);

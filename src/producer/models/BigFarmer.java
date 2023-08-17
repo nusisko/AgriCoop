@@ -1,6 +1,6 @@
-package Producers.Models;
+package producer.models;
 
-import Production.Models.Crop;
+import production.models.Crop;
 
 import java.util.ArrayList;
 /**

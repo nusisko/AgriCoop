@@ -2,18 +2,18 @@
 
 ## Introduction
 
-In the world of rural agriculture, it's common to find **family-owned farms** of varying sizes, producing a wide range of products including *olives*, *grapes*, *pistachios*, *oranges*, and *melons*. In our globalized context, the path to success in distribution and sales often involves forming collaborations among these small-scale producers. This is where **cooperatives** play a crucial role, fostering cooperation among farmers and advancing their shared interests. This document outlines the requirements, constraints, and functionalities of an application designed to streamline the management of an agricultural cooperative within this unique rural environment.
+In the world of rural agriculture, it's common to find **family-owned farms** of varying sizes, producing a wide range of products including *olives*, *grapes*, *pistachios*, *oranges*, and *melons*. In our globalized context, the path to success in distribution and sales often involves forming collaborations among these small-scale producer. This is where **cooperatives** play a crucial role, fostering cooperation among farmers and advancing their shared interests. This document outlines the requirements, constraints, and functionalities of an application designed to streamline the management of an agricultural cooperative within this unique rural environment.
 
 ## Actors
 
-### 1. Producers
+### 1. producer
 
-Producers are the core contributors to the cooperative. They supply various products, categorized as follows:
+producer are the core contributors to the cooperative. They supply various products, categorized as follows:
 
-- **Small Producers**: Those owning land up to or equal to a specified threshold (e.g., 5 hectares). They can contribute up to five different products.
-- **Large Producers**: Those with land exceeding the small producer threshold.
+- **Small producer**: Those owning land up to or equal to a specified threshold (e.g., 5 hectares). They can contribute up to five different products.
+- **Large producer**: Those with land exceeding the small producer threshold.
 
-Additionally, there's the concept of forming **"producer federations"** where small producers collaborate to contribute products. The total land area of a federation must not surpass the small producer limit.
+Additionally, there's the concept of forming **"producer federations"** where small producer collaborate to contribute products. The total land area of a federation must not surpass the small producer limit.
 
 Each product has a specific *yield per hectare*, indicating the quantity of output per hectare, and a *reference price per kilogram* exclusive of taxes.
 
@@ -35,10 +35,10 @@ Distributors purchase products for resale, while consumers directly buy from the
 The application aims to provide the following functionalities:
 
 1. **Producer Management**:
-    - Register small and large producers.
+    - Register small and large producer.
     - Manage producer federations.
 
-2. **Production Management**:
+2. **production Management**:
     - Register products with associated yield per hectare and reference price.
 
 3. **Logistics Management**:

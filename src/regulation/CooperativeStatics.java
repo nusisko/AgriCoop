@@ -1,4 +1,4 @@
-package Regulation;
+package regulation;
 
 public class CooperativeStatics {
     private static float smallProducerMaxExtension = 5.f;
