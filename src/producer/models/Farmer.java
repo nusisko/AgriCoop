@@ -6,6 +6,7 @@ import production.models.Crop;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Abstract class that represents a farmer
@@ -26,7 +27,7 @@ public abstract class Farmer implements IHarvester {
     /**
      * Collection of the farmer's crops
      */
-    protected ArrayList<Crop> production;
+    protected List<Crop> production;
 
     //TODO protected ArrayList<SaleRequest> sales;
 
@@ -36,7 +37,7 @@ public abstract class Farmer implements IHarvester {
      * @param name       the name of the farmer
      * @param production the production of the farmer as collection of crops
      */
-    public Farmer(String name, ArrayList<Crop> production) {
+    public Farmer(String name, List<Crop> production) {
         this.name = name;
         this.production = production;
         this.totalExtension = getTotalExtension();
@@ -68,6 +69,8 @@ public abstract class Farmer implements IHarvester {
      *
      * @return production of the farmer
      */
+
+     /*
     public ArrayList<Crop> getProduction() {
         ArrayList<Crop> productionCopy = new ArrayList<>();
         if (production != null && !production.isEmpty()) {
@@ -76,6 +79,11 @@ public abstract class Farmer implements IHarvester {
             }
         }
         return productionCopy;
+    }
+    */
+
+    public List<Crop> getProduction() {
+        return production;
     }
 
     public abstract void setProduction(ArrayList<Crop> production);

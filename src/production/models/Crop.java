@@ -49,8 +49,14 @@ public class Crop {
     }
 
     public Product getProduct() {
+        return product;
+    }
+
+    /*
+    public Product getProduct() {
         return new Product(product);
     }
+    */
 
     public void setProduct(Product product) {
         this.product = new Product(product);
@@ -70,6 +76,6 @@ public class Crop {
 
     @Override
     public String toString() {
-        return "Crop{" + "product=" + product + ", extension=" + extension + '}';
+        return "Crop {" + "product=" + product + ", extension=" + extension + '}';
     }
 }

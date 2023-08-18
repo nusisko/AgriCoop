@@ -23,7 +23,7 @@ public class FederatedFarmer implements IHarvester{
         this.name = name;
         this.productType = productType;
         this.associates = associates;
-        this.totalExtension = getTotalExtension();
+        this.totalExtension = .0f;
         this.production = new ArrayList<>();
         FederatedFarmerValidation.registerFederatedFarmer(this);
     }
@@ -62,8 +62,7 @@ public class FederatedFarmer implements IHarvester{
     }
 
     public void removeCrop(Crop crop, SmallFarmer smallFarmer) {
-        FederatedCrop federatedCropToCompare = new FederatedCrop(crop, smallFarmer);
-        production.removeIf(federatedCrop -> federatedCrop.equals(federatedCropToCompare));
+        production.removeIf(federatedCrop -> federatedCrop.getCrop().equals(crop));
     }
     public SmallFarmer findCropOwner(Crop crop) {
         SmallFarmer cropOwner = null;
@@ -86,8 +85,10 @@ public class FederatedFarmer implements IHarvester{
 
     public void setTotalExtension() {
         float extension = .0f;
-        for (Crop crop : production) {
-            extension += crop.getExtension();
+        if (!production.isEmpty()) {
+            for (FederatedCrop fedaratedCrop : production) {
+                extension += fedaratedCrop.getCrop().getExtension();
+            }
         }
         this.totalExtension = extension;
     }
@@ -98,5 +99,16 @@ public class FederatedFarmer implements IHarvester{
         SmallFarmer cropOwner = findCropOwner(crop);
         Stock.addQuantity(crop.getProduct(), quantityOwnerPair);
         removeCrop(crop, cropOwner);
+    }
+
+    @Override
+    public String toString() {
+        return "FederatedFarmer{" +
+                "name='" + name + '\'' +
+                ", productType=" + productType +
+                ", associates=" + associates +
+                ", totalExtension=" + totalExtension +
+                ", production=" + production +
+                '}';
     }
 }

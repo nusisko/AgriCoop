@@ -15,7 +15,13 @@ public class FederatedCrop{
         return new SmallFarmer(proprietary);
     }
 
+    /*
     public Crop getCrop() {
-        return new Crop(crop);
+        return Crop(crop);
+    }
+    */
+
+    public Crop getCrop() {
+        return crop;
     }
 }

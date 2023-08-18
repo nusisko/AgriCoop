@@ -32,4 +32,12 @@ public class QuantityOwnerPair {
     public void substractQuantity(float quantity) {
         this.quantity -= quantity;
     }
+
+    @Override
+    public String toString() {
+        return "QuantityOwnerPair{" +
+                "owner=" + owner +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

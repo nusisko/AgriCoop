@@ -54,6 +54,14 @@ public class SmallFarmer extends Farmer{
 
     @Override
     public String toString() {
-        return "SmallFarmer{" + "\n\tname='" + name + '\'' + "\n\ttotalExtension=" + totalExtension + "\n\tproduction=" + production + "\n}";
+        StringBuilder sb = new StringBuilder();
+        sb.append("SmallFarmer {" + "\n\tname = '" + name + '\'' + "\n\ttotalExtension = " + totalExtension + "\n\tproduction=\n");
+
+        for (Crop crop : production) {
+            sb.append("\t\t" + crop + "\n");
+        }
+
+        sb.append("}");
+        return sb.toString();
     }
 }
