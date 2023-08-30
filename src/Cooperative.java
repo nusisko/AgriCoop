@@ -1,5 +1,6 @@
 import customer.Distributor;
 import logistics.Order.OrderStack;
+import logistics.delivery.validations.AddressValidation;
 import logistics.stock.Stock;
 import producer.models.BigFarmer;
 import producer.models.SmallFarmer;
@@ -10,6 +11,7 @@ import production.models.Product;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 public class Cooperative {
     public static void main(String[] args) {
@@ -107,6 +109,9 @@ public class Cooperative {
         System.out.println(fleet.getSales());
         System.out.println(andorianTubersFederatedFarmer.getSales());
 
-
+        List<Double> vec = AddressValidation.searchForCoordinates("Guadalajara", "Guadalajara");
+        List<Double> vec2 = AddressValidation.searchForCoordinates("Guadalajara", "Hita");
+        Double distBetween = AddressValidation.calculateDistance(vec.get(0), vec.get(1), vec.get(2), vec2.get(0), vec2.get(1), vec2.get(2));
+        System.out.println("Distance between Guadalajara and Alcalá de Henares: " + distBetween + " km");
     }
 }

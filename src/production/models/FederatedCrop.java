@@ -1,6 +1,5 @@
 package production.models;
 
-import org.jetbrains.annotations.NotNull;
 import producer.models.SmallFarmer;
 
 public class FederatedCrop{

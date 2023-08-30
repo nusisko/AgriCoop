@@ -1,7 +1,6 @@
 package production.models;
 
 import production.validations.ProductValidator;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Class that represents a product
@@ -59,7 +58,7 @@ public class Product{
      * @param productToCopy the product to copy
      * @throws NullPointerException if the product is null
      */
-    public Product(@NotNull Product productToCopy) {
+    public Product(Product productToCopy) {
         this.name = productToCopy.getName();
         this.price = productToCopy.getPrice();
         this.performance = productToCopy.getPerformance();

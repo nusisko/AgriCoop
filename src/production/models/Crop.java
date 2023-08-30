@@ -1,7 +1,6 @@
 package production.models;
 
 import production.validations.ProductValidator;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Class that represents a crop
@@ -43,7 +42,7 @@ public class Crop {
      * @throws NullPointerException if the crop is null
      */
 
-    public Crop(@NotNull Crop cropToCopy){
+    public Crop(Crop cropToCopy){
         this.product = cropToCopy.getProduct();
         this.extension = cropToCopy.getExtension();
     }

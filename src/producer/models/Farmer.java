@@ -5,7 +5,6 @@ import logistics.stock.QuantityOwnerPair;
 import logistics.stock.Stock;
 import producer.models.interfaces.IHarvester;
 import production.models.Crop;
-import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +52,7 @@ public abstract class Farmer implements IHarvester {
      *
      * @param farmerToCopy the farmer to copy
      */
-    public Farmer(@NotNull Farmer farmerToCopy) {
+    public Farmer(Farmer farmerToCopy) {
         this.name = farmerToCopy.getName();
         this.production = farmerToCopy.getProduction();
         this.totalExtension = farmerToCopy.getTotalExtension();
