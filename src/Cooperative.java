@@ -1,29 +1,26 @@
 import customer.Distributor;
-import logistics.OrderStack;
-import logistics.Stock;
+import logistics.Order.OrderStack;
+import logistics.stock.Stock;
 import producer.models.BigFarmer;
-import producer.models.Farmer;
 import producer.models.SmallFarmer;
 import producer.models.FederatedFarmer;
 import production.models.Crop;
 import production.models.Product;
-import regulation.CooperativeStatics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 public class Cooperative {
     public static void main(String[] args) {
 
         // Creation of products
-        Product betazoidZabuFruit = new Product("Fruta zabu de Betazed", 100, 0.2f, true);
-        Product vulcanWheat = new Product("Trigo vulcano", 100, 0.2f, false);
-        Product andorianTubers = new Product("Tubérculos andorianos", 100, 0.2f, true);
-        Product rigelianKiBaratan = new Product("Ki Baratan rigeliano", 100, 0.2f, false);
-        Product rigelianFleckFlowers = new Product("Flores Fleck regalianas", 100, 0.2f, true);
-        Product bolianTomatoes = new Product("Tomates bolianos", 100, 0.2f, false);
+        Product betazoidZabuFruit = new Product("Fruta zabu de Betazed", 6, 0.2f, true);
+        Product vulcanWheat = new Product("Trigo vulcano", 2, 0.2f, false);
+        Product andorianTubers = new Product("Tubérculos andorianos", 4, 0.2f, true);
+        Product rigelianKiBaratan = new Product("Ki Baratan rigeliano", 4, 0.2f, false);
+        Product rigelianFleckFlowers = new Product("Flores Fleck regalianas", 2, 0.2f, true);
+        Product bolianTomatoes = new Product("Tomates bolianos", 3, 0.2f, false);
 //        System.out.println("STOCK =\n"+Stock.getStock());
 
 
@@ -52,7 +49,9 @@ public class Cooperative {
         Crop fleetCrop1 = new Crop(rigelianFleckFlowers, 5.1f);
         Crop fleetCrop2 = new Crop(bolianTomatoes, 7f);
         Crop fleetCrop3 = new Crop(rigelianKiBaratan, 4f);
-        ArrayList<Crop> fleetProduction = new ArrayList<Crop>(Arrays.asList(fleetCrop1, fleetCrop2, fleetCrop3));
+        Crop fleetCrop4 = new Crop(andorianTubers, 3.1f);
+
+        ArrayList<Crop> fleetProduction = new ArrayList<Crop>(Arrays.asList(fleetCrop1, fleetCrop2, fleetCrop3, fleetCrop4));
 
         // Creation of producers
         SmallFarmer data = new SmallFarmer("Data", dataProduction);
@@ -70,29 +69,43 @@ public class Cooperative {
         andorianTubersFederatedFarmer.addCrop(rikerCrop2, riker);
         andorianTubersFederatedFarmer.addCrop(spokCrop2, spok);
         andorianTubersFederatedFarmer.addCrop(worfCrop1, worf);
-//        System.out.println(andorianTubersFederatedFarmer);
+        // System.out.println(andorianTubersFederatedFarmer);
 
 
-//        System.out.println("### BEFORE HARVEST ###\n"+andorianTubersFederatedFarmer.getProduction()/*Stock.logStock()*/);
 
-        // Harvesting
+
+        // ######## Harvesting ########
+
+        // System.out.println("### BEFORE HARVEST ###\n"+andorianTubersFederatedFarmer.getProduction()/*Stock.logStock()*/);
         andorianTubersFederatedFarmer.harvestToStock(worfCrop1);
-//        System.out.println("### AFTER HARVEST ###\n"+andorianTubersFederatedFarmer.getProduction()/*Stock.logStock()*/);
-
+        // System.out.println("### AFTER HARVEST ###\n"+andorianTubersFederatedFarmer.getProduction()/*Stock.logStock()*/);
         riker.harvestToStock(rikerCrop3);
         fleet.harvestToStock(fleetCrop1);
+        fleet.harvestToStock(fleetCrop2);
         worf.harvestToStock(worfCrop2);
         deana.harvestToStock(deanaCrop1);
 
-//        System.out.println(Stock.logStock());
+        fleet.harvestToStock(fleetCrop4);
+        andorianTubersFederatedFarmer.harvestToStock(spokCrop2);
+        andorianTubersFederatedFarmer.harvestToStock(rikerCrop2);
+        // System.out.println(Stock.logStock());
 
+        // ######## Creation of CUSTOMERS ########
 
-        // Creation of CUSTOMERS
-        OrderStack.printStack();
         Distributor distributorTest = new Distributor("test","Cordoba");
+
+        // ######## Purchase ########
+        OrderStack.printStack();
         distributorTest.purchase(betazoidZabuFruit, 1f);
+        distributorTest.purchase(andorianTubers, 7f);
+
         OrderStack.printStack();
         Stock.manageLastOrder();
+        Stock.manageLastOrder();
+
+        System.out.println(deana.getSales());
+        System.out.println(fleet.getSales());
+        System.out.println(andorianTubersFederatedFarmer.getSales());
 
 
     }

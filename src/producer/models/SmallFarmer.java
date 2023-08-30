@@ -2,7 +2,6 @@ package producer.models;
 
 import producer.validations.SmallFarmerValidation;
 import production.models.Crop;
-
 import java.util.ArrayList;
 
 /**
@@ -12,6 +11,7 @@ import java.util.ArrayList;
  * @see Farmer
  */
 public class SmallFarmer extends Farmer{
+
     /**
      * Creates a new SmallFarmer object with the specified name and production
      *
@@ -20,7 +20,7 @@ public class SmallFarmer extends Farmer{
      */
     public SmallFarmer(String name, ArrayList<Crop> production) {
         super(name, production);
-        SmallFarmerValidation.validateProduction(production);
+        SmallFarmerValidation.validateProductionExtension(production);
     }
 
     /**
@@ -32,9 +32,14 @@ public class SmallFarmer extends Farmer{
         super(smallFarmerToCopy);
     }
 
+    /**
+     * Sets the production of the farmer
+     *
+     * @param newProduction the new production of the farmer as collection of crops
+     */
     @Override
     public void setProduction(ArrayList<Crop> newProduction) {
-        SmallFarmerValidation.validateProduction(newProduction);
+        SmallFarmerValidation.validateProductionExtension(newProduction);
         ArrayList<Crop> productionCopy = new ArrayList<>();
         if (newProduction != null && !newProduction.isEmpty()) {
             for (Crop crop : newProduction) {
@@ -44,6 +49,11 @@ public class SmallFarmer extends Farmer{
         this.production = productionCopy;
     }
 
+    /**
+     * Adds a crop to the production of the farmer
+     *
+     * @param crop the crop to add
+     */
     @Override
     public void addCrop(Crop crop) {
         float expectedExtension = crop.getExtension() + this.getTotalExtension();
@@ -52,6 +62,11 @@ public class SmallFarmer extends Farmer{
         setTotalExtension();
     }
 
+    /**
+     * Returns a string representation of the small farmer
+     *
+     * @return string representation of the small farmer
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

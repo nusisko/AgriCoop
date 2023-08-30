@@ -1,8 +1,8 @@
 package producer.models;
 
 import production.models.Crop;
-
 import java.util.ArrayList;
+
 /**
  * Class that represents a big farmer
  *
@@ -19,7 +19,6 @@ public class BigFarmer extends Farmer {
     public BigFarmer(String name, ArrayList<Crop> production) {
         super(name, production);
     }
-
     /**
      * Creates a deep copy of the big farmer passed as parameter
      *
@@ -28,6 +27,12 @@ public class BigFarmer extends Farmer {
     public BigFarmer(BigFarmer bigFarmerToCopy) {
         super(bigFarmerToCopy);
     }
+
+    /**
+     * Sets the production of the farmer
+     *
+     * @param production the new production of the farmer as collection of crops
+     */
     @Override
     public void setProduction(ArrayList<Crop> production) {
         ArrayList<Crop> productionCopy = new ArrayList<>();
@@ -39,6 +44,11 @@ public class BigFarmer extends Farmer {
         this.production = productionCopy;
     }
 
+    /**
+     * Adds a crop to the production of the farmer
+     *
+     * @param crop the crop to add
+     */
     @Override
     public void addCrop(Crop crop) {
         Crop copyCrop = new Crop(crop);
@@ -47,6 +57,11 @@ public class BigFarmer extends Farmer {
 
     }
 
+    /**
+     * Returns the total extension of the farmer's production
+     *
+     * @return total extension of the farmer's production
+     */
     @Override
     public String toString() {
         return "BigFarmer{" + "\n\tname='" + name + '\'' + "\n\ttotalExtension=" + totalExtension + "\n\tproduction=" + production + "\n}";

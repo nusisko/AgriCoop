@@ -1,5 +1,8 @@
-package logistics;
+package logistics.stock;
 
+import billing.Bill;
+import logistics.Order.Order;
+import logistics.Order.OrderStack;
 import production.models.Product;
 
 import java.util.ArrayList;
@@ -56,21 +59,26 @@ public final class Stock {
     }
 
     public static void handleStockOrder(Product product, float quantity) {
+        float quantityTons = quantity / 1000;
         List<QuantityOwnerPair> productStock = stock.get(product);
         float totalProductQuantityStock = getTotalProductQuantity(product);
 
-        if (totalProductQuantityStock < quantity) {
+        if (totalProductQuantityStock * 1000 < quantityTons) {
             throw new IllegalArgumentException("Not enough product in stock.");
         } else {
 
             for (QuantityOwnerPair quantityOwnerPair : productStock) {
                 float ratio = quantityOwnerPair.getQuantity() / totalProductQuantityStock;
-                quantityOwnerPair.substractQuantity(quantity * ratio);
+                quantityOwnerPair.substractQuantity(quantityTons * ratio);
 
                 //TODO SEND TO LOGISTICS TRANSPORTER
-                //TODO ADD MONEY TO PRODUCER quantityOwnerPair.getOwner().addMoney(quantity * stockRatio[i])
-                System.out.println(quantity * ratio + " " + product.getName() + " from " + quantityOwnerPair.getOwner() + " crop");
+
+                String nameOwner = quantityOwnerPair.getOwner().getName();
+                Bill bill = new Bill(nameOwner, product, quantity, "factura prueba 1");
+                System.out.println("### Bill of " + (quantity * ratio) + " Kg of " + product.getName() + " generated to " + nameOwner + " ###");
+                quantityOwnerPair.getOwner().addSale(bill);
             }
+
         }
     }
 

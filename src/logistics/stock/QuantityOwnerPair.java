@@ -1,6 +1,6 @@
-package logistics;
+package logistics.stock;
 
-import producer.models.IHarvester;
+import producer.models.interfaces.IHarvester;
 
 public class QuantityOwnerPair {
     private IHarvester owner;

@@ -11,8 +11,15 @@ public class FederatedCrop{
         this.proprietary = propietary;
         this.crop = crop;
     }
+    /*
     public SmallFarmer getProprietary() {
         return new SmallFarmer(proprietary);
+    }
+    */
+
+    public SmallFarmer getProprietary() {
+        return proprietary;
+
     }
 
     /*

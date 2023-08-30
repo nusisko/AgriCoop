@@ -1,4 +1,4 @@
-package logistics;
+package logistics.Order;
 
 import customer.ICustomer;
 import production.models.Product;

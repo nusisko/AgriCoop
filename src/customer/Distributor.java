@@ -1,6 +1,6 @@
 package customer;
 
-import logistics.Order;
+import logistics.Order.Order;
 import production.models.Product;
 
 public class Distributor implements ICustomer {

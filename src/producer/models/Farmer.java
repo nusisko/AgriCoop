@@ -1,10 +1,11 @@
 package producer.models;
 
-import logistics.QuantityOwnerPair;
-import logistics.Stock;
+import billing.Bill;
+import logistics.stock.QuantityOwnerPair;
+import logistics.stock.Stock;
+import producer.models.interfaces.IHarvester;
 import production.models.Crop;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * Abstract class that represents a farmer
  *
  * @version 1.0.0
+ * @see IHarvester
  * @see Crop
  */
 public abstract class Farmer implements IHarvester {
@@ -28,8 +30,10 @@ public abstract class Farmer implements IHarvester {
      * Collection of the farmer's crops
      */
     protected List<Crop> production;
-
-    //TODO protected ArrayList<SaleRequest> sales;
+    /**
+     * Collection of the farmer's bills
+     */
+    protected final List<Bill> sales;
 
     /**
      * Creates a new Farmer object with the specified name and production
@@ -41,7 +45,7 @@ public abstract class Farmer implements IHarvester {
         this.name = name;
         this.production = production;
         this.totalExtension = getTotalExtension();
-        //TODO this.sales = new ArrayList<>();
+        this.sales = new ArrayList<>();
     }
 
     /**
@@ -53,41 +57,46 @@ public abstract class Farmer implements IHarvester {
         this.name = farmerToCopy.getName();
         this.production = farmerToCopy.getProduction();
         this.totalExtension = farmerToCopy.getTotalExtension();
-        //TODO this.sales = farmerToCopy.getSales();
+        this.sales = farmerToCopy.getSales();
     }
 
+    /**
+     * Returns the name of the farmer
+     *
+     * @return name of the farmer
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the name of the farmer
+     *
+     * @param name the name of the farmer
+     */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Returns a deep copy of the production
+     * Returns the production as collection of crops
      *
      * @return production of the farmer
      */
-
-     /*
-    public ArrayList<Crop> getProduction() {
-        ArrayList<Crop> productionCopy = new ArrayList<>();
-        if (production != null && !production.isEmpty()) {
-            for (Crop crop : production) {
-                productionCopy.add(new Crop(crop));
-            }
-        }
-        return productionCopy;
-    }
-    */
-
     public List<Crop> getProduction() {
         return production;
     }
 
+    /**
+     * Sets the production of the farmer
+     *
+     * @param production the production of the farmer as collection of crops
+     */
     public abstract void setProduction(ArrayList<Crop> production);
 
+    /**
+     * Sets the total extension of the farmer's production
+     */
     public void setTotalExtension() {
         float setTotalExtension = 0;
         if (production != null) {
@@ -98,21 +107,56 @@ public abstract class Farmer implements IHarvester {
         this.totalExtension = setTotalExtension;
     }
 
+    /**
+     * Returns the total extension of the farmer's production
+     *
+     * @return total extension of the farmer's production
+     */
     public float getTotalExtension() {
         setTotalExtension();
         return totalExtension;
     }
+
+    /**
+     * Removes the crop passed as parameter from the farmer's production
+     * @param crop the crop to remove
+     */
     public void removeCrop(Crop crop){
         production.remove(crop);
         setTotalExtension();
     }
 
+    /**
+     * Adds the crop passed as parameter to the farmer's production
+     * @param crop the crop to add
+     */
     public abstract void addCrop(Crop crop);
 
+    /**
+     * Adds the crop passed as parameter to the cooperative's stock
+     * Then removes the crop from the farmer's production
+     * @param crop the crop to harvest
+     */
     public void harvestToStock(Crop crop){
         QuantityOwnerPair quantityOwnerPair = new QuantityOwnerPair(this, crop.getExtension());
         Stock.addQuantity(crop.getProduct(), quantityOwnerPair);
         removeCrop(crop);
     }
 
+    /**
+     * Returns the collection of the farmer's bills
+     *
+     * @return collection of the farmer's bills
+     */
+    public List<Bill> getSales() {
+        return sales;
+    }
+
+    /**
+     * Adds the bill passed as parameter to the farmer's bills
+     * @param bill the bill to add
+     */
+    public void addSale(Bill bill){
+        sales.add(bill);
+    }
 }
