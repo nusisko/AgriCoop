@@ -1,4 +1,4 @@
-package logistics.stock;
+package logistics.warehouse.models;
 
 import producer.models.interfaces.IHarvester;
 

@@ -1,8 +1,8 @@
 package producer.models;
 
 import billing.Bill;
-import logistics.stock.QuantityOwnerPair;
-import logistics.stock.Stock;
+import logistics.warehouse.models.QuantityOwnerPair;
+import logistics.warehouse.models.Stock;
 import producer.models.interfaces.IHarvester;
 import producer.validations.FederatedFarmerValidation;
 import producer.validations.SmallFarmerValidation;

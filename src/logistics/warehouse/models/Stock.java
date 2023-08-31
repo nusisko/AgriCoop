@@ -1,8 +1,6 @@
-package logistics.stock;
+package logistics.warehouse.models;
 
 import billing.Bill;
-import logistics.Order.Order;
-import logistics.Order.OrderStack;
 import production.models.Product;
 
 import java.util.ArrayList;

@@ -1,13 +1,8 @@
 package logistics.delivery.validations;
 
-import logistics.stock.Stock;
-import production.models.Product;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 

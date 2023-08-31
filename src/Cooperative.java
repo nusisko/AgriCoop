@@ -1,7 +1,7 @@
 import customer.Distributor;
-import logistics.Order.OrderStack;
+import logistics.warehouse.models.OrderStack;
 import logistics.delivery.validations.AddressValidation;
-import logistics.stock.Stock;
+import logistics.warehouse.models.Stock;
 import producer.models.BigFarmer;
 import producer.models.SmallFarmer;
 import producer.models.FederatedFarmer;

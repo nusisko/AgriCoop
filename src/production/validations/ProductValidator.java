@@ -1,6 +1,6 @@
 package production.validations;
 
-import logistics.stock.Stock;
+import logistics.warehouse.models.Stock;
 import production.models.Product;
 
 import java.util.ArrayList;

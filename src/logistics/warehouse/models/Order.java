@@ -1,6 +1,8 @@
-package logistics.Order;
+package logistics.warehouse.models;
 
 import customer.ICustomer;
+import logistics.delivery.models.Provider;
+import logistics.delivery.models.Tariff;
 import production.models.Product;
 
 import java.util.Date;
@@ -14,7 +16,7 @@ public class Order {
     private final ICustomer customer;
     private final Date date;
 
-    public Order(Product product, float quantity, ICustomer customer) {
+    public Order(Product product, float quantity, Provider transportProvider, Tariff transportTariff, ICustomer customer) {
         this.orderNumber = count++;
         this.product = product;
         this.quantity = quantity;
