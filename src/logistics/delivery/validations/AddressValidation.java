@@ -1,5 +1,7 @@
 package logistics.delivery.validations;
 
+import logistics.delivery.models.Address;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,7 +22,7 @@ public class AddressValidation {
         try (BufferedReader br = new BufferedReader(new FileReader("resources/listado-longitud-latitud-municipios-espana.csv"))) {
             String line;
             br.readLine(); // Skip the header line
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null && addressCoordinates.isEmpty()) {
                 String[] parts = line.split(",");
                 if (parts.length == 5) {
                     String csvProvince = parts[0];
@@ -28,8 +30,6 @@ public class AddressValidation {
                     double latitude = Double.parseDouble(parts[2]);
                     double longitude = Double.parseDouble(parts[3]);
                     double altitude = Double.parseDouble(parts[4]);
-
-
                     if (csvProvince.equals(province) && csvCity.equals(city)) {
                         System.out.println("Found Address: " + csvCity + ", " + csvProvince + " - Lat: " + latitude + ", Long: " + longitude);
                         addressCoordinates.add(latitude);
@@ -38,14 +38,26 @@ public class AddressValidation {
                     }
                 }
             }
-
+            if (addressCoordinates.isEmpty()) {
+                throw new IllegalArgumentException("Address not found, check the province and city input.");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return addressCoordinates;
     }
 
-    public static double calculateDistance(Double latitudeOrigin, Double longitudeOrigin, Double altitudeOrigin, Double latitudeDestination, Double longitudeDestination, Double altitudeDestination) {
+    public static double getDistanceBetweenAddresses(Address origin, Address destination) {
+        Double latitudeOrigin = origin.getLatitude();
+        Double longitudOrigin = origin.getLongitude();
+        Double altitudeOrigin = origin.getAltitude();
+        Double latitudeDestination = destination.getLatitude();
+        Double longitudDestination = destination.getLongitude();
+        Double altitudeDestination = destination.getAltitude();
+        return calculateDistance(latitudeOrigin, longitudOrigin, altitudeOrigin, latitudeDestination, longitudDestination, altitudeDestination);
+    }
+
+    private static double calculateDistance(Double latitudeOrigin, Double longitudeOrigin, Double altitudeOrigin, Double latitudeDestination, Double longitudeDestination, Double altitudeDestination) {
         double RADIUS_EARTH = 6369.174461501855; // Earth radius in kilometers (at latitude 40 ~ Spain)
 
         double latA = Math.toRadians(latitudeOrigin);
@@ -56,15 +68,13 @@ public class AddressValidation {
         double deltaLat = latB - latA;
         double deltaLon = lonB - lonA;
 
-        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2)
-                + Math.cos(latA) * Math.cos(latB)
-                * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) + Math.cos(latA) * Math.cos(latB) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
 
         double centralAngle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-        Double greatCircleDistance = RADIUS_EARTH * centralAngle;
+        double greatCircleDistance = RADIUS_EARTH * centralAngle;
 
-        return Math.sqrt(Math.pow((altitudeDestination - altitudeOrigin)/1000, 2) + Math.pow(greatCircleDistance, 2));
+        return Math.sqrt(Math.pow((altitudeDestination - altitudeOrigin) / 1000, 2) + Math.pow(greatCircleDistance, 2));
 
     }
 

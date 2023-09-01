@@ -1,10 +1,13 @@
+import customer.CustomerType;
 import customer.Distributor;
+import logistics.delivery.models.Address;
+import logistics.delivery.models.Provider;
+import logistics.delivery.models.Tariff;
 import logistics.warehouse.models.OrderStack;
-import logistics.delivery.validations.AddressValidation;
 import logistics.warehouse.models.Stock;
 import producer.models.BigFarmer;
-import producer.models.SmallFarmer;
 import producer.models.FederatedFarmer;
+import producer.models.SmallFarmer;
 import production.models.Crop;
 import production.models.Product;
 
@@ -74,8 +77,6 @@ public class Cooperative {
         // System.out.println(andorianTubersFederatedFarmer);
 
 
-
-
         // ######## Harvesting ########
 
         // System.out.println("### BEFORE HARVEST ###\n"+andorianTubersFederatedFarmer.getProduction()/*Stock.logStock()*/);
@@ -93,13 +94,17 @@ public class Cooperative {
         // System.out.println(Stock.logStock());
 
         // ######## Creation of CUSTOMERS ########
+        Address testAddress = new Address("Sevilla", "Sevilla", "Calle lunares", 5, "");
+        Distributor distributorTest = new Distributor("test", testAddress, CustomerType.FINAL_CONSUMER);
 
-        Distributor distributorTest = new Distributor("test","Cordoba");
+        // ######## Creation of CUSTOMERS ########
+        Tariff economicTariff = new Tariff("EconomicTariff", 0.02, 0.07, CustomerType.DISTRIBUTOR);
+        Provider shipmentsFerengi = new Provider("shipmentsFerengi", new ArrayList<Tariff>(List.of(economicTariff)));
 
         // ######## Purchase ########
         OrderStack.printStack();
-        distributorTest.purchase(betazoidZabuFruit, 1f);
-        distributorTest.purchase(andorianTubers, 7f);
+        distributorTest.purchase(betazoidZabuFruit, 1f, shipmentsFerengi, economicTariff);
+        distributorTest.purchase(andorianTubers, 7f, shipmentsFerengi, economicTariff);
 
         OrderStack.printStack();
         Stock.manageLastOrder();
@@ -109,9 +114,6 @@ public class Cooperative {
         System.out.println(fleet.getSales());
         System.out.println(andorianTubersFederatedFarmer.getSales());
 
-        List<Double> vec = AddressValidation.searchForCoordinates("Guadalajara", "Guadalajara");
-        List<Double> vec2 = AddressValidation.searchForCoordinates("Guadalajara", "Hita");
-        Double distBetween = AddressValidation.calculateDistance(vec.get(0), vec.get(1), vec.get(2), vec2.get(0), vec2.get(1), vec2.get(2));
-        System.out.println("Distance between Guadalajara and Alcalá de Henares: " + distBetween + " km");
+
     }
 }

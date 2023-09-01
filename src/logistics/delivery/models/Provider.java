@@ -6,6 +6,11 @@ public class Provider {
     private String name;
     private List<Tariff> customerServices;
 
+    public Provider(String name, List<Tariff> customerServices) {
+        this.name = name;
+        this.customerServices = customerServices;
+    }
+
     public String getName() {
         return name;
     }

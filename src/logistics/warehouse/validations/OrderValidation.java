@@ -11,12 +11,6 @@ import java.util.List;
 
 public class OrderValidation {
 
-    /**
-     * Private constructor to prevent instantiation
-     */
-    private OrderValidation() {
-        throw new AssertionError("OrderValidation class should not be instantiated.");
-    }
 
     /**
      * Validates that the value is positive
@@ -38,8 +32,6 @@ public class OrderValidation {
         } else {
             validateTransportCompanyTariff(selectedProvider, selectedTariff);
             validateCustomerTypeOrder(customerType, selectedProvider, selectedTariff);
-
-
         }
     }
 
@@ -50,7 +42,7 @@ public class OrderValidation {
         }
     }
 
-    public static void validateCustomerTypeOrder(CustomerType customerType, Provider selectedProvider, Tariff selectedTariff) {
+    private static void validateCustomerTypeOrder(CustomerType customerType, Provider selectedProvider, Tariff selectedTariff) {
         if (customerType != selectedTariff.getCustomerType()) {
             StringBuilder helperMessage = new StringBuilder();
             List<Tariff> posibleServices = new ArrayList<>();
@@ -68,31 +60,7 @@ public class OrderValidation {
                 }
             }
             throw new IllegalArgumentException(helperMessage.toString());
-
         }
-    }
-
-
-    //------------------------------------------------------------------------------------------------
-    public static void validateNewProduct(String productName) {
-        if (productName == null) {
-            throw new NullPointerException("Product name cannot be null.");
-        }
-        for (Product product : productDirectory) {
-            if (product.getName().equals(productName)) {
-                throw new IllegalArgumentException("Product already exists in the product collection.");
-            }
-        }
-    }
-
-    /**
-     * Registers a product in the product collection
-     *
-     * @param product the product to register
-     */
-    public static void registerProduct(Product product) {
-        productDirectory.add(product);
-        Stock.registerProduct(product);
     }
 
 }

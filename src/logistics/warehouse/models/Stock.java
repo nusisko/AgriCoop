@@ -1,6 +1,7 @@
 package logistics.warehouse.models;
 
 import billing.Bill;
+import logistics.warehouse.validations.OrderLogic;
 import production.models.Product;
 
 import java.util.ArrayList;
@@ -51,12 +52,14 @@ public final class Stock {
         Product orderProduct = lastOrderStack.getProduct();
         float availableProductStock = getTotalProductQuantity(orderProduct);
         if (availableProductStock >= lastOrderStack.getQuantity()) {
-            handleStockOrder(orderProduct, lastOrderStack.getQuantity());
+            handleStockOrder(lastOrderStack);
             OrderStack.popOrderfromStack();
         }
     }
 
-    public static void handleStockOrder(Product product, float quantity) {
+    public static void handleStockOrder(Order order) {
+        Product product = order.getProduct();
+        float quantity = order.getQuantity();
         float quantityTons = quantity / 1000;
         List<QuantityOwnerPair> productStock = stock.get(product);
         float totalProductQuantityStock = getTotalProductQuantity(product);
@@ -70,6 +73,10 @@ public final class Stock {
                 quantityOwnerPair.substractQuantity(quantityTons * ratio);
 
                 //TODO SEND TO LOGISTICS TRANSPORTER
+                double deliveryCosts = OrderLogic.getDeliveryCosts(order);
+                double productCosts = product.getPrice() * quantity;
+                double pricePerKilo = (deliveryCosts + productCosts) / quantity;
+                System.out.println("############\nPrice Per Kilo: " + pricePerKilo);
 
                 String nameOwner = quantityOwnerPair.getOwner().getName();
                 Bill bill = new Bill(nameOwner, product, quantity, "factura prueba 1");

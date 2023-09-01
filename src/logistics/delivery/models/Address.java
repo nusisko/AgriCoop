@@ -24,7 +24,6 @@ public class Address {
         this.latitude = coordinates.get(0);
         this.longitude = coordinates.get(1);
         this.altitude = coordinates.get(2);
-        this.latitude = 0;
     }
 
 

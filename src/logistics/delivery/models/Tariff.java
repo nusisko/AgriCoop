@@ -5,15 +5,18 @@ import regulation.LogisticsStatics;
 
 public class Tariff {
     private String name;
-    private double priceFixed;
+    private final double priceFixedLongDistance;
+    private double pricePerKilometerLongDistance;
     private double pricePerKilometerSmallDistance;
     private CustomerType customerType;
 
-    public Tariff(String name, double pricePerKilometerSmallDistance, CustomerType customerType) {
+    public Tariff(String name, double pricePerKilometerSmallDistance, double pricePerKilometerLongDistance, CustomerType customerType) {
         this.name = name;
-        this.priceFixed = LogisticsStatics.getFixedPriceLongDistance();
+        this.priceFixedLongDistance = LogisticsStatics.getFixedPriceLongDistance();
         this.pricePerKilometerSmallDistance = pricePerKilometerSmallDistance;
+        this.pricePerKilometerLongDistance = pricePerKilometerLongDistance;
         this.customerType = customerType;
+
     }
 
     public String getName() {
@@ -24,16 +27,24 @@ public class Tariff {
         this.name = name;
     }
 
-    public double getPriceFixed() {
-        return priceFixed;
-    }
-
-    public void setPriceFixed(double priceFixed) {
-        this.priceFixed = priceFixed;
+    public double getPriceFixedLongDistance() {
+        return priceFixedLongDistance;
     }
 
     public double getPricePerKilometerSmallDistance() {
         return pricePerKilometerSmallDistance;
+    }
+
+    public void setPricePerKilometerSmallDistance(double pricePerKilometerSmallDistance) {
+        this.pricePerKilometerSmallDistance = pricePerKilometerSmallDistance;
+    }
+
+    public double getPricePerKilometerLongDistance() {
+        return pricePerKilometerLongDistance;
+    }
+
+    public void setPricePerKilometerLongDistance(double pricePerKilometerLongDistance) {
+        this.pricePerKilometerLongDistance = pricePerKilometerLongDistance;
     }
 
     public CustomerType getCustomerType() {
@@ -44,11 +55,4 @@ public class Tariff {
         this.customerType = customerType;
     }
 
-    double calculatePriceLongDistanceDelivery(float productPrice, float productWeight) {
-        return priceFixed * productPrice * productWeight;
-    }
-
-    double calculatePriceShortDistanceDelivery(float distance, float productWeight) {
-        return pricePerKilometerSmallDistance * productWeight * distance;
-    }
 }

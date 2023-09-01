@@ -1,5 +1,6 @@
 package regulation;
 
+import logistics.delivery.models.Address;
 import logistics.delivery.models.Tariff;
 
 public class LogisticsStatics {
@@ -10,6 +11,12 @@ public class LogisticsStatics {
      * @see Tariff
      */
     private static double fixedPriceLongDistance = .5f;
+
+    private static Address cooperativeAddress = new Address("Guadalajara", "Guadalajara", "Calle La Cooperativa", 1, "");
+
+    private static int maxDistanceTravelPerishable = 100;
+
+    private static int maxDistanceTravelNonPerishable = 50;
 
     /**
      * Private constructor to prevent instantiation
@@ -42,5 +49,36 @@ public class LogisticsStatics {
         return fixedPriceLongDistance;
     }
 
+    public static void updateCooperativeAddress(Address newCooperativeAdress) {
+        cooperativeAddress = newCooperativeAdress;
+    }
+
+    public static Address getCooperativeAddress() {
+        return cooperativeAddress;
+    }
+
+    public static int getMaxDistanceTravelPerishable() {
+        return maxDistanceTravelPerishable;
+    }
+
+    public static void updateMaxDistanceTravelPerishable(int newMaxDistanceTravelPerishable) {
+        if (newMaxDistanceTravelPerishable > 0) {
+            maxDistanceTravelPerishable = newMaxDistanceTravelPerishable;
+        } else {
+            throw new IllegalArgumentException("Invalid distance, enter a positive distance");
+        }
+    }
+
+    public static int getMaxDistanceTravelNonPerishable() {
+        return maxDistanceTravelNonPerishable;
+    }
+
+    public static void updateMaxDistanceTravelNonPerishable(int newMaxDistanceTravelNonPerishable) {
+        if (newMaxDistanceTravelNonPerishable > 0) {
+            maxDistanceTravelNonPerishable = newMaxDistanceTravelNonPerishable;
+        } else {
+            throw new IllegalArgumentException("Invalid distance, enter a positive distance");
+        }
+    }
 
 }
