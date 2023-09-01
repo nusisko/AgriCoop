@@ -11,11 +11,18 @@ public class LogisticsStatics {
      * @see Tariff
      */
     private static double fixedPriceLongDistance = .5f;
-
+    /**
+     * Fiscal address of the cooperative
+     * @see Address
+     */
     private static Address cooperativeAddress = new Address("Guadalajara", "Guadalajara", "Calle La Cooperativa", 1, "");
-
+    /**
+     * Maximum distance that a perishable product can travel
+     */
     private static int maxDistanceTravelPerishable = 100;
-
+    /**
+     * Maximum distance that a non perishable product can travel
+     */
     private static int maxDistanceTravelNonPerishable = 50;
 
     /**
@@ -49,18 +56,38 @@ public class LogisticsStatics {
         return fixedPriceLongDistance;
     }
 
-    public static void updateCooperativeAddress(Address newCooperativeAdress) {
-        cooperativeAddress = newCooperativeAdress;
+    /**
+     * Updates the fiscal address of the cooperative
+     *
+     * @param newCooperativeAddress the new fiscal address of the cooperative
+     */
+    public static void updateCooperativeAddress(Address newCooperativeAddress) {
+        cooperativeAddress = newCooperativeAddress;
     }
 
+    /**
+     * Returns the fiscal address of the cooperative
+     *
+     * @return the fiscal address of the cooperative
+     */
     public static Address getCooperativeAddress() {
         return cooperativeAddress;
     }
 
+    /**
+     * Returns the maximum distance that a perishable product can travel
+     * @return the maximum distance that a perishable product can travel
+     */
     public static int getMaxDistanceTravelPerishable() {
         return maxDistanceTravelPerishable;
     }
 
+    /**
+     * Updates the maximum distance that a perishable product can travel
+     *
+     * @param newMaxDistanceTravelPerishable the new maximum distance that a perishable product can travel
+     * @throws IllegalArgumentException if the new limit is negative
+     */
     public static void updateMaxDistanceTravelPerishable(int newMaxDistanceTravelPerishable) {
         if (newMaxDistanceTravelPerishable > 0) {
             maxDistanceTravelPerishable = newMaxDistanceTravelPerishable;
@@ -69,10 +96,20 @@ public class LogisticsStatics {
         }
     }
 
+    /**
+     * Returns the maximum distance that a non-perishable product can travel
+     * @return the maximum distance that a non-perishable product can travel
+     */
     public static int getMaxDistanceTravelNonPerishable() {
         return maxDistanceTravelNonPerishable;
     }
 
+    /**
+     * Updates the maximum distance that a non-perishable product can travel
+     *
+     * @param newMaxDistanceTravelNonPerishable the new maximum distance that a non-perishable product can travel
+     * @throws IllegalArgumentException if the new limit is negative
+     */
     public static void updateMaxDistanceTravelNonPerishable(int newMaxDistanceTravelNonPerishable) {
         if (newMaxDistanceTravelNonPerishable > 0) {
             maxDistanceTravelNonPerishable = newMaxDistanceTravelNonPerishable;

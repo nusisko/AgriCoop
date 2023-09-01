@@ -17,8 +17,9 @@ import java.util.*;
  * Class that represents a federated farmer that acts as group of small farmers that produce the same product
  *
  * @version 1.0.0
- * @see IHarvester
  * @see Farmer
+ * @see IHarvester
+ * @see IBillable
  */
 public class FederatedFarmer implements IHarvester, IBillable {
 
@@ -206,7 +207,11 @@ public class FederatedFarmer implements IHarvester, IBillable {
      */
     @Override
     public void harvestToStock(Crop crop) {
-        QuantityOwnerPair quantityOwnerPair = new QuantityOwnerPair(this, crop.getExtension());
+        float cropExtension = crop.getExtension();
+        float productPerformance = crop.getProduct().getPerformance();
+        float productQuantityKilos = cropExtension * productPerformance*1000;
+
+        QuantityOwnerPair quantityOwnerPair = new QuantityOwnerPair(this, productQuantityKilos);
         Stock.addQuantity(crop.getProduct(), quantityOwnerPair);
         removeCrop(crop);
     }

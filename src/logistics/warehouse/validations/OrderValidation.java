@@ -3,7 +3,6 @@ package logistics.warehouse.validations;
 import customer.CustomerType;
 import logistics.delivery.models.TransportProvider;
 import logistics.delivery.models.Tariff;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,16 @@ public class OrderValidation {
         }
     }
 
-
+    /**
+     * Validates that the selected Tariff is provided by the selected Transport Provider
+     * Then, validates that the selected Tariff is provided to the selected Customer Type
+     * @param customerType
+     * @param selectedTariff
+     * @param selectedTransportProvider
+     * @throws IllegalArgumentException if the selected Transport Provider does not provide the selected Tariff
+     * @throws IllegalArgumentException if the selected Tariff is not provided to the selected Customer Type
+     * @throws IllegalArgumentException if the selected Transport Provider does not provide any service
+     */
     public static void validateTransportOrder(CustomerType customerType, Tariff selectedTariff, TransportProvider selectedTransportProvider) {
         List<Tariff> servicesOfSelectedCompany = selectedTransportProvider.getCustomerServices();
         if (servicesOfSelectedCompany.isEmpty()) {
@@ -33,6 +41,12 @@ public class OrderValidation {
         }
     }
 
+    /**
+     * Validates that the selected Tariff is provided by the selected Transport Provider
+     * @param selectedTransportProvider the selected Transport Provider
+     * @param selectedTariff the selected Tariff
+     * @throws IllegalArgumentException if the selected Transport Provider does not provide the selected Tariff
+     */
     private static void validateTransportCompanyTariff(TransportProvider selectedTransportProvider, Tariff selectedTariff) {
         List<Tariff> transportCompanyServices = selectedTransportProvider.getCustomerServices();
         if (!transportCompanyServices.contains(selectedTariff)) {
@@ -40,6 +54,13 @@ public class OrderValidation {
         }
     }
 
+    /**
+     * Validates that the selected Tariff is provided to the selected Customer Type
+     * @param customerType the selected Customer Type
+     * @param selectedTransportProvider the selected Transport Provider
+     * @param selectedTariff the selected Tariff
+     * @throws IllegalArgumentException if the selected Tariff is not provided to the selected Customer Type
+     */
     private static void validateCustomerTypeOrder(CustomerType customerType, TransportProvider selectedTransportProvider, Tariff selectedTariff) {
         if (customerType != selectedTariff.getCustomerType()) {
             StringBuilder helperMessage = new StringBuilder();

@@ -3,7 +3,6 @@ import customer.Customer;
 import logistics.delivery.models.Address;
 import logistics.delivery.models.TransportProvider;
 import logistics.delivery.models.Tariff;
-import logistics.warehouse.models.OrderStack;
 import logistics.warehouse.models.Stock;
 import producer.models.BigFarmer;
 import producer.models.FederatedFarmer;
@@ -19,17 +18,16 @@ import java.util.List;
 public class Cooperative {
     public static void main(String[] args) {
 
-        // Creation of products
+        //CREATION OF PRODUCTS
         Product betazoidZabuFruit = new Product("Fruta zabu de Betazed", 6, 0.2f, true);
         Product vulcanWheat = new Product("Trigo vulcano", 2, 0.2f, false);
         Product andorianTubers = new Product("Tubérculos andorianos", 4, 0.2f, true);
         Product rigelianKiBaratan = new Product("Ki Baratan rigeliano", 4, 0.2f, false);
         Product rigelianFleckFlowers = new Product("Flores Fleck regalianas", 2, 0.2f, true);
         Product bolianTomatoes = new Product("Tomates bolianos", 3, 0.2f, false);
-//        System.out.println("STOCK =\n"+Stock.getStock());
 
 
-        //Creation of crops
+        //CREATION OF CROPS
         Crop rikerCrop1 = new Crop(rigelianKiBaratan, 1f);
         Crop rikerCrop2 = new Crop(andorianTubers, 2f);
         Crop rikerCrop3 = new Crop(rigelianFleckFlowers, 2f);
@@ -58,30 +56,24 @@ public class Cooperative {
 
         ArrayList<Crop> fleetProduction = new ArrayList<Crop>(Arrays.asList(fleetCrop1, fleetCrop2, fleetCrop3, fleetCrop4));
 
-        // Creation of producers
+        // CREATION OF FARMERS
         SmallFarmer data = new SmallFarmer("Data", dataProduction);
-//        System.out.println(data);
         SmallFarmer deana = new SmallFarmer("Deana", deanaProduction);
-
         SmallFarmer riker = new SmallFarmer("Riker", rikerProduction);
         SmallFarmer spok = new SmallFarmer("Spok", spokProduction);
         SmallFarmer worf = new SmallFarmer("Worf", worfProduction);
         BigFarmer fleet = new BigFarmer("Fleet", fleetProduction);
 
-        // Creation of federated farmers
+        // CREATION OD FEDERATED FARMER
         HashSet<SmallFarmer> andorianTubersAssociates = new HashSet<>(Arrays.asList(riker, spok, worf));
         FederatedFarmer andorianTubersFederatedFarmer = new FederatedFarmer("Andorian Tubers", andorianTubers, andorianTubersAssociates);
         andorianTubersFederatedFarmer.addCrop(rikerCrop2, riker);
         andorianTubersFederatedFarmer.addCrop(spokCrop2, spok);
         andorianTubersFederatedFarmer.addCrop(worfCrop1, worf);
-        // System.out.println(andorianTubersFederatedFarmer);
 
+        // HARVESTING CROPS
 
-        // ######## Harvesting ########
-
-        // System.out.println("### BEFORE HARVEST ###\n"+andorianTubersFederatedFarmer.getProduction()/*Stock.logStock()*/);
         andorianTubersFederatedFarmer.harvestToStock(worfCrop1);
-        // System.out.println("### AFTER HARVEST ###\n"+andorianTubersFederatedFarmer.getProduction()/*Stock.logStock()*/);
         riker.harvestToStock(rikerCrop3);
         fleet.harvestToStock(fleetCrop1);
         fleet.harvestToStock(fleetCrop2);
@@ -91,25 +83,25 @@ public class Cooperative {
         fleet.harvestToStock(fleetCrop4);
         andorianTubersFederatedFarmer.harvestToStock(spokCrop2);
         andorianTubersFederatedFarmer.harvestToStock(rikerCrop2);
-        // System.out.println(Stock.logStock());
 
-        // ######## Creation of CUSTOMERS ########
+        // CREATION OF CUSTOMER
         Address testAddress = new Address("Sevilla", "Sevilla", "Calle lunares", 5, "");
         Customer customerTest = new Customer("test", testAddress, CustomerType.DISTRIBUTOR);
 
-        // ######## Creation of CUSTOMERS ########
+        // CREATION OF TRANSPORT PROVIDER
         Tariff economicTariff = new Tariff("EconomicTariff", 0.02, 0.07, CustomerType.DISTRIBUTOR);
         TransportProvider shipmentsFerengi = new TransportProvider("shipmentsFerengi", new ArrayList<Tariff>(List.of(economicTariff)));
 
-        // ######## Purchase ########
-        OrderStack.printStack();
+        // PURCHASES
         customerTest.purchase(betazoidZabuFruit, 1f, shipmentsFerengi, economicTariff);
         customerTest.purchase(andorianTubers, 7f, shipmentsFerengi, economicTariff);
 
-        OrderStack.printStack();
+        // MANAGE ORDERS
         Stock.manageLastOrder();
         Stock.manageLastOrder();
 
+
+        //SHOW BILLS OF (FARMERS - TRANSPORT PROVIDER - CUSTOMER)
         System.out.println(deana.getSales());
         System.out.println(fleet.getSales());
         System.out.println(andorianTubersFederatedFarmer.getSales());

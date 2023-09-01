@@ -14,8 +14,13 @@ public class TaxesStatics {
      * Standard rate of IVA - (Impuesto de Valor Añadido)
      */
     private static float ivaRate = .1f;
-
+    /**
+     * Tax applied to distributors
+     */
     private static float taxDistributors = .5f;
+    /**
+     * Tax applied to final customers
+     */
     private static float taxFinalCustomer = .15f;
     /**
      * Fiscal name of the cooperative
@@ -98,9 +103,9 @@ public class TaxesStatics {
     }
 
     /**
-     * Returns the tax applied to distributors
+     * Returns the tax applied to customers
      *
-     * @return tax to  distributors
+     * @return tax to customers
      */
     public static float getTaxFinalCustomer() {
         return taxFinalCustomer;

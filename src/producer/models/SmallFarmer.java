@@ -41,7 +41,7 @@ public class SmallFarmer extends Farmer{
     public void setProduction(ArrayList<Crop> newProduction) {
         SmallFarmerValidation.validateProductionExtension(newProduction);
         ArrayList<Crop> productionCopy = new ArrayList<>();
-        if (newProduction != null && !newProduction.isEmpty()) {
+        if (!newProduction.isEmpty()) {
             for (Crop crop : newProduction) {
                 productionCopy.add(new Crop(crop));
             }
@@ -70,7 +70,7 @@ public class SmallFarmer extends Farmer{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("SmallFarmer {" + "\n\tname = '" + name + '\'' + "\n\ttotalExtension = " + totalExtension + "\n\tproduction=\n");
+        sb.append("SmallFarmer {" + "\n\tname = '").append(name).append('\'').append("\n\ttotalExtension = ").append(totalExtension).append("\n\tproduction=\n");
 
         for (Crop crop : production) {
             sb.append("\t\t" + crop + "\n");

@@ -4,6 +4,7 @@ import billing.Bill;
 import customer.CustomerType;
 import customer.ICustomer;
 import logistics.delivery.models.TransportProvider;
+import logistics.warehouse.validations.DeliveryCosts;
 import logistics.warehouse.validations.OrderLogic;
 import production.models.Product;
 import regulation.TaxesStatics;
@@ -52,54 +53,43 @@ public final class Stock {
     }
 
     public static void manageLastOrder() {
-        Order lastOrderStack = OrderStack.peekOrderfromStack();
+        Order lastOrderStack = OrderLogic.peekOrderFromStack();
         Product orderProduct = lastOrderStack.getProduct();
         float availableProductStock = getTotalProductQuantity(orderProduct);
         if (availableProductStock >= lastOrderStack.getQuantity()) {
             handleStockOrder(lastOrderStack);
-            OrderStack.popOrderfromStack();
+            OrderLogic.popOrderFromStack();
         }
     }
 
     public static void handleStockOrder(Order order) {
         Product product = order.getProduct();
         float quantity = order.getQuantity();
-        float quantityTons = quantity / 1000;
         List<QuantityOwnerPair> productStock = stock.get(product);
         float totalProductQuantityStock = getTotalProductQuantity(product);
 
-        if (totalProductQuantityStock * 1000 < quantityTons) {
+        if (totalProductQuantityStock< quantity) {
             throw new IllegalArgumentException("Not enough product in stock.");
         } else {
 
             for (QuantityOwnerPair quantityOwnerPair : productStock) {
                 float ratio = quantityOwnerPair.getQuantity() / totalProductQuantityStock;
-                quantityOwnerPair.substractQuantity(quantityTons * ratio);
+                quantityOwnerPair.substractQuantity(quantity * ratio);
+
                 String nameOwner = quantityOwnerPair.getOwner().getName();
                 Bill bill = new Bill(TaxesStatics.getFiscalCooperativeName(), nameOwner, product.getName(), product.getPrice(), quantity * ratio, "Payment bill");
                 System.out.println("### Bill of " + (quantity * ratio) + " Kg of " + product.getName() + " generated to " + nameOwner + " ###");
                 quantityOwnerPair.getOwner().addSale(bill);
             }
-            //TODO SEND TO LOGISTICS TRANSPORTER
 
-            ICustomer customer = order.getCustomer();
-            TransportProvider transportProvider = order.getProvider();
-
-            float benefitMargin;
-            if (customer.getCustomerType() == CustomerType.DISTRIBUTOR) {
-                benefitMargin = TaxesStatics.getTaxDistributors();
-            } else {
-                benefitMargin = TaxesStatics.getTaxFinalCustomer();
-            }
-
-            float deliveryCosts = (float) OrderLogic.getDeliveryCosts(order);
-            float productCosts = product.getPrice() * quantity * (1 + benefitMargin);
+            float deliveryCosts = (float) DeliveryCosts.getDeliveryCosts(order);
+            float productCosts = (float) DeliveryCosts.getProductCostsWithMargin(order);
             float totalPricePerKilo = (deliveryCosts + productCosts) / quantity;
 
-            Bill billCustomer = new Bill(customer.getName(), TaxesStatics.getFiscalCooperativeName(), product.getName(), totalPricePerKilo, quantity, "Receipt bill");
-            customer.addSale(billCustomer);
-            Bill billTransportProvider = new Bill(TaxesStatics.getFiscalCooperativeName(), transportProvider.getName(), product.getName(), product.getPrice(), quantity, deliveryCosts, "Payment bill");
-            transportProvider.addSale(billTransportProvider);
+            Bill billCustomer = new Bill(order.getCustomer().getName(), TaxesStatics.getFiscalCooperativeName(), product.getName(), totalPricePerKilo, quantity, "Receipt bill");
+            order.getCustomer().addSale(billCustomer);
+            Bill billTransportProvider = new Bill(TaxesStatics.getFiscalCooperativeName(), order.getProvider().getName(), product.getName(), product.getPrice(), quantity, deliveryCosts, "Payment bill");
+            order.getProvider().addSale(billTransportProvider);
         }
     }
 

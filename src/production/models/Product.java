@@ -65,10 +65,16 @@ public class Product{
         this.isPerishable = productToCopy.isPerishable();
     }
 
+    /**
+     * @return name of the product
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return the price of the product
+     */
     public float getPrice() {
         return price;
     }
@@ -83,6 +89,9 @@ public class Product{
         this.price = price;
     }
 
+    /**
+     * @return the performance of the product in tonnes per hectare
+     */
     public float getPerformance() {
         return performance;
     }
@@ -97,10 +106,17 @@ public class Product{
         this.performance = performance;
     }
 
+    /**
+     * @return true if the product is perishable, false otherwise
+     */
     public boolean isPerishable() {
         return isPerishable;
     }
 
+    /**
+     * Sets the perishable property of the product
+     * @param perishable true if the product is perishable, false otherwise
+     */
     public void setPerishable(boolean perishable) {
         isPerishable = perishable;
     }

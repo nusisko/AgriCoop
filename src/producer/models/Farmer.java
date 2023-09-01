@@ -14,6 +14,7 @@ import java.util.List;
  *
  * @version 1.0.0
  * @see IHarvester
+ * @see IBillable
  * @see Crop
  */
 public abstract class Farmer implements IHarvester {
@@ -138,7 +139,11 @@ public abstract class Farmer implements IHarvester {
      * @param crop the crop to harvest
      */
     public void harvestToStock(Crop crop){
-        QuantityOwnerPair quantityOwnerPair = new QuantityOwnerPair(this, crop.getExtension());
+        float cropExtension = crop.getExtension();
+        float productPerformance = crop.getProduct().getPerformance();
+        float productQuantityKilos = cropExtension * productPerformance*1000;
+
+        QuantityOwnerPair quantityOwnerPair = new QuantityOwnerPair(this, productQuantityKilos);
         Stock.addQuantity(crop.getProduct(), quantityOwnerPair);
         removeCrop(crop);
     }
