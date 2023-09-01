@@ -1,6 +1,7 @@
 package producer.models;
 
 import billing.Bill;
+import billing.IBillable;
 import logistics.warehouse.models.QuantityOwnerPair;
 import logistics.warehouse.models.Stock;
 import producer.models.interfaces.IHarvester;
@@ -19,7 +20,7 @@ import java.util.*;
  * @see IHarvester
  * @see Farmer
  */
-public class FederatedFarmer implements IHarvester{
+public class FederatedFarmer implements IHarvester, IBillable {
 
     /**
      * Name of the federated farmer

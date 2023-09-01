@@ -16,7 +16,7 @@ public class Bill {
     private final String sender;
     private final String receiver;
 
-    private final Product product;
+    private final String product;
     private final float productPrice;
     private final float productQuantity;
 
@@ -27,15 +27,28 @@ public class Bill {
 
     private final String description;
 
-    public Bill(String receiver, Product product, float amount, String description) {
+    public Bill(String sender ,String receiver, String product, float price, float amount, String description) {
         this.billNumber = count++;
         this.date = new Date();
-        this.sender = TaxesStatics.getFiscalCooperativeName();
+        this.sender = sender;
         this.receiver = receiver;
-        this.product = new Product(product);
-        this.productPrice = product.getPrice();
+        this.product = product;
+        this.productPrice = price;
         this.productQuantity = amount;
         this.amountBase = amount * productPrice;
+        this.amountIVA = amount * TaxesStatics.getIvaRate();
+        this.amountTotal = amountBase + amountIVA;
+        this.description = description;
+    }
+    public Bill(String sender ,String receiver, String product, float price, float amount,float transportCosts, String description) {
+        this.billNumber = count++;
+        this.date = new Date();
+        this.sender = sender;
+        this.receiver = receiver;
+        this.product = product;
+        this.productPrice = price;
+        this.productQuantity = amount;
+        this.amountBase = transportCosts;
         this.amountIVA = amount * TaxesStatics.getIvaRate();
         this.amountTotal = amountBase + amountIVA;
         this.description = description;
@@ -55,7 +68,7 @@ public class Bill {
                 "  Sender: " + sender + "\n" +
                 "  Receiver: " + receiver + "\n" +
                 "**************************************************\n" +
-                "  Product: " + product.getName() + "\n" +
+                "  Product: " + product + "\n" +
                 String.format("%-25s %15.2f %s\n", "  Product price:", productPrice, " €/Kg") +
                 String.format("%-25s %15.2f %s\n", "  Product quantity:", productQuantity, " Kg") +
                 "**************************************************\n" +

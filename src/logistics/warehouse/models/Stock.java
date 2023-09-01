@@ -1,8 +1,12 @@
 package logistics.warehouse.models;
 
 import billing.Bill;
+import customer.CustomerType;
+import customer.ICustomer;
+import logistics.delivery.models.TransportProvider;
 import logistics.warehouse.validations.OrderLogic;
 import production.models.Product;
+import regulation.TaxesStatics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,19 +75,31 @@ public final class Stock {
             for (QuantityOwnerPair quantityOwnerPair : productStock) {
                 float ratio = quantityOwnerPair.getQuantity() / totalProductQuantityStock;
                 quantityOwnerPair.substractQuantity(quantityTons * ratio);
-
-                //TODO SEND TO LOGISTICS TRANSPORTER
-                double deliveryCosts = OrderLogic.getDeliveryCosts(order);
-                double productCosts = product.getPrice() * quantity;
-                double pricePerKilo = (deliveryCosts + productCosts) / quantity;
-                System.out.println("############\nPrice Per Kilo: " + pricePerKilo);
-
                 String nameOwner = quantityOwnerPair.getOwner().getName();
-                Bill bill = new Bill(nameOwner, product, quantity, "factura prueba 1");
+                Bill bill = new Bill(TaxesStatics.getFiscalCooperativeName(), nameOwner, product.getName(), product.getPrice(), quantity * ratio, "Payment bill");
                 System.out.println("### Bill of " + (quantity * ratio) + " Kg of " + product.getName() + " generated to " + nameOwner + " ###");
                 quantityOwnerPair.getOwner().addSale(bill);
             }
+            //TODO SEND TO LOGISTICS TRANSPORTER
 
+            ICustomer customer = order.getCustomer();
+            TransportProvider transportProvider = order.getProvider();
+
+            float benefitMargin;
+            if (customer.getCustomerType() == CustomerType.DISTRIBUTOR) {
+                benefitMargin = TaxesStatics.getTaxDistributors();
+            } else {
+                benefitMargin = TaxesStatics.getTaxFinalCustomer();
+            }
+
+            float deliveryCosts = (float) OrderLogic.getDeliveryCosts(order);
+            float productCosts = product.getPrice() * quantity * (1 + benefitMargin);
+            float totalPricePerKilo = (deliveryCosts + productCosts) / quantity;
+
+            Bill billCustomer = new Bill(customer.getName(), TaxesStatics.getFiscalCooperativeName(), product.getName(), totalPricePerKilo, quantity, "Receipt bill");
+            customer.addSale(billCustomer);
+            Bill billTransportProvider = new Bill(TaxesStatics.getFiscalCooperativeName(), transportProvider.getName(), product.getName(), product.getPrice(), quantity, deliveryCosts, "Payment bill");
+            transportProvider.addSale(billTransportProvider);
         }
     }
 

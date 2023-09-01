@@ -13,7 +13,10 @@ public class TaxesStatics {
     /**
      * Standard rate of IVA - (Impuesto de Valor Añadido)
      */
-    private static float ivaRate = .21f;
+    private static float ivaRate = .1f;
+
+    private static float taxDistributors = .5f;
+    private static float taxFinalCustomer = .15f;
     /**
      * Fiscal name of the cooperative
      */
@@ -70,5 +73,49 @@ public class TaxesStatics {
             throw new IllegalArgumentException("Invalid IVA rate: " + newIvaRate + "\n Has to represent a percentage between 0 and 1.");
         }
         ivaRate = newIvaRate;
+    }
+
+    /**
+     * Returns the tax applied to distributors
+     *
+     * @return tax to  distributors
+     */
+    public static float getTaxDistributors() {
+        return taxDistributors;
+    }
+
+    /**
+     * Updates the tax applied to distributors
+     *
+     * @param newTaxDistributors the tax applied to distributors
+     * @throws IllegalArgumentException if the new tax is not between 0 and 1
+     */
+    public static void setTaxDistributors(float newTaxDistributors) {
+        if (0 > newTaxDistributors || newTaxDistributors > 1) {
+            throw new IllegalArgumentException("Invalid tax rate: " + newTaxDistributors + "\n Has to represent a percentage between 0 and 1.");
+        }
+        taxDistributors = newTaxDistributors;
+    }
+
+    /**
+     * Returns the tax applied to distributors
+     *
+     * @return tax to  distributors
+     */
+    public static float getTaxFinalCustomer() {
+        return taxFinalCustomer;
+    }
+
+    /**
+     * Updates the tax applied to final customers
+     *
+     * @param newTaxFinalCustomers the tax applied to final customers
+     * @throws IllegalArgumentException if the new tax is not between 0 and 1
+     */
+    public static void setTaxFinalCustomer(float newTaxFinalCustomers) {
+        if (0 > newTaxFinalCustomers || newTaxFinalCustomers > 1) {
+            throw new IllegalArgumentException("Invalid tax rate: " + newTaxFinalCustomers + "\n Has to represent a percentage between 0 and 1.");
+        }
+        taxFinalCustomer = newTaxFinalCustomers;
     }
 }

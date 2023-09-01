@@ -1,7 +1,7 @@
 import customer.CustomerType;
-import customer.Distributor;
+import customer.Customer;
 import logistics.delivery.models.Address;
-import logistics.delivery.models.Provider;
+import logistics.delivery.models.TransportProvider;
 import logistics.delivery.models.Tariff;
 import logistics.warehouse.models.OrderStack;
 import logistics.warehouse.models.Stock;
@@ -95,16 +95,16 @@ public class Cooperative {
 
         // ######## Creation of CUSTOMERS ########
         Address testAddress = new Address("Sevilla", "Sevilla", "Calle lunares", 5, "");
-        Distributor distributorTest = new Distributor("test", testAddress, CustomerType.FINAL_CONSUMER);
+        Customer customerTest = new Customer("test", testAddress, CustomerType.DISTRIBUTOR);
 
         // ######## Creation of CUSTOMERS ########
         Tariff economicTariff = new Tariff("EconomicTariff", 0.02, 0.07, CustomerType.DISTRIBUTOR);
-        Provider shipmentsFerengi = new Provider("shipmentsFerengi", new ArrayList<Tariff>(List.of(economicTariff)));
+        TransportProvider shipmentsFerengi = new TransportProvider("shipmentsFerengi", new ArrayList<Tariff>(List.of(economicTariff)));
 
         // ######## Purchase ########
         OrderStack.printStack();
-        distributorTest.purchase(betazoidZabuFruit, 1f, shipmentsFerengi, economicTariff);
-        distributorTest.purchase(andorianTubers, 7f, shipmentsFerengi, economicTariff);
+        customerTest.purchase(betazoidZabuFruit, 1f, shipmentsFerengi, economicTariff);
+        customerTest.purchase(andorianTubers, 7f, shipmentsFerengi, economicTariff);
 
         OrderStack.printStack();
         Stock.manageLastOrder();
@@ -113,6 +113,10 @@ public class Cooperative {
         System.out.println(deana.getSales());
         System.out.println(fleet.getSales());
         System.out.println(andorianTubersFederatedFarmer.getSales());
+        System.out.println(customerTest.getSales());
+        System.out.println(shipmentsFerengi.getSales());
+
+
 
 
     }

@@ -1,26 +1,30 @@
 package customer;
 
+import billing.Bill;
 import logistics.delivery.models.Address;
-import logistics.delivery.models.Provider;
+import logistics.delivery.models.TransportProvider;
 import logistics.delivery.models.Tariff;
 import logistics.warehouse.models.Order;
 import production.models.Product;
 
-public class Distributor implements ICustomer {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Customer implements ICustomer {
     private String name;
     private Address address;
     private CustomerType customerType;
+    protected final List<Bill> purchases;
 
-
-    public Distributor(String name, Address address, CustomerType customerType) {
+    public Customer(String name, Address address, CustomerType customerType) {
         this.name = name;
         this.address = address;
         this.customerType = customerType;
-
+        this.purchases = new ArrayList<>();
     }
 
     @Override
-    public void purchase(Product product, float quantity, Provider transportProvider, Tariff transportTariff) {
+    public void purchase(Product product, float quantity, TransportProvider transportProvider, Tariff transportTariff) {
         Order newOrder = new Order(product, quantity, transportProvider, transportTariff, this);
     }
 
@@ -51,5 +55,15 @@ public class Distributor implements ICustomer {
 
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
+    }
+
+    @Override
+    public List<Bill> getSales() {
+        return purchases;
+    }
+
+    @Override
+    public void addSale(Bill bill) {
+        purchases.add(bill);
     }
 }
